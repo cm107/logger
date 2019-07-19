@@ -70,14 +70,17 @@ class LoggerConfig:
     show_info_log = True
     show_warning_log = True
     show_error_log = True
+    show_system_log = False
 
     write_messages = True
     write_good_log = True
     write_info_log = True
     write_warning_log = True
     write_error_log = True
+    write_system_log = True
 
     good_log_path = f"{messages_logs_dir}/good.log"
     info_log_path = f"{messages_logs_dir}/info.log"
     warning_log_path = f"{messages_logs_dir}/warning.log"
     error_log_path = f"{messages_logs_dir}/error.log"
+    system_log_path = f"{messages_logs_dir}/system.log"

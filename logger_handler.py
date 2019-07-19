@@ -74,6 +74,7 @@ class TextHeader:
     info = TextHeaderFactoryHandler().get_message_header(TextColor.cyan)
     warning = TextHeaderFactoryHandler().get_message_header(TextColor.yellow)
     error = TextHeaderFactoryHandler().get_message_header(TextColor.red)
+    system = TextHeaderFactoryHandler().get_message_header(TextColor.white)
 
 class Logger:
     def __init__(self):
@@ -101,8 +102,9 @@ class Logger:
         self.info_log = {}
         self.warning_log = {}
         self.error_log = {}
+        self.system_log = {}
 
-        self.good("Logger initialized.")
+        self.system("Logger initialized.")
 
     def _template(
         self, text: str, show_flag: bool, write_flag: bool, header: TextHeader,
@@ -224,8 +226,6 @@ class Logger:
         )
 
     def debug_italic(self, text):
-        text_str = str(text)
-        print("{}{}{}".format(TextHeader.debug_italic, text_str, TextHeader.std))
         self._template(
             text=text,
             show_flag=LoggerConfig.show_debug_italic_log,
@@ -286,6 +286,16 @@ class Logger:
             log_dict=self.error_log
         )
 
+    def system(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_system_log,
+            write_flag=LoggerConfig.write_system_log,
+            header=TextHeader.system,
+            logtype_label='System',
+            log_dict=self.system_log
+        )
+
     def test_logger(self):
         print('Hi')
         self.good('Good')
@@ -295,6 +305,8 @@ class Logger:
         self.warning('Warning')
         print('Hi')
         self.error('Error')
+        print('Hi')
+        self.system('System')
         print('Hi')
         self.debug_normal('Debug Normal')
         print('Hi')

@@ -5,8 +5,8 @@ from .logger_handler import logger
 class LogWriter:
     def __init__(self):
         self.log_dir = LoggerConfig.logs_dir
-        logger.info(f'Using {self.log_dir} for log directory.')
-        logger.good("Log Writer initialized")
+        logger.system(f'Using {self.log_dir} for log directory.')
+        logger.system("Log Writer initialized")
 
     def dir_exists(self, url: str):
         return os.path.isdir(url)
@@ -28,11 +28,11 @@ class LogWriter:
         if not self.dir_exists(self.log_dir):
             for dir_path in LoggerConfig.dir_list:
                 os.mkdir(dir_path)
-            logger.info("log directory created.")
+            logger.system("log directory created.")
         else:
             self.delete_all_log_files(LoggerConfig.logs_dir)
-            logger.info("All log files have been deleted from log directory.")
-        logger.info("Log directory initialized.")
+            logger.system("All log files have been deleted from log directory.")
+        logger.system("Log directory initialized.")
 
     def write_log(self, logname: str, logdir: str, logdict: dict):
         try:
@@ -45,7 +45,7 @@ class LogWriter:
                 line = f"==={log_type} {log_time}===\n{log_text}\n"
                 f.write(line)
             f.close()
-            logger.good(f"{logname}.log written successfully")           
+            logger.system(f"{logname}.log written successfully")           
         except:
             traceback.print_exc()
             logger.error(f"Failed to write to {logname}.log")
@@ -91,6 +91,10 @@ class LogWriter:
                     self.write_log(
                         'error', LoggerConfig.messages_logs_dir,
                         logger.error_log)
+                if LoggerConfig.write_system_log:
+                    self.write_log(
+                        'system', LoggerConfig.messages_logs_dir,
+                        logger.system_log)
             if LoggerConfig.write_simple:
                 if LoggerConfig.write_red_log:
                     self.write_log(
