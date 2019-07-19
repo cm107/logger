@@ -39,6 +39,9 @@ class TextHeaderFactoryHandler:
     def get_std_header(self):
         return "\033[0m"
 
+    def get_simple_header(self, text_color: TextColor):
+        return TextHeaderFactory(TextStyle.bold, text_color, TextBackgroundColor.black).header
+
     def get_debug_header(self, style: TextStyle):
         return TextHeaderFactory(style, TextColor.green, TextBackgroundColor.white).header
 
@@ -49,6 +52,16 @@ class TextHeader:
     # Standard
     std = TextHeaderFactoryHandler().get_std_header()
     
+    # Simple
+    black = TextHeaderFactoryHandler().get_simple_header(TextColor.black)
+    red = TextHeaderFactoryHandler().get_simple_header(TextColor.red)
+    green = TextHeaderFactoryHandler().get_simple_header(TextColor.green)
+    yellow = TextHeaderFactoryHandler().get_simple_header(TextColor.yellow)
+    blue = TextHeaderFactoryHandler().get_simple_header(TextColor.blue)
+    purple = TextHeaderFactoryHandler().get_simple_header(TextColor.purple)
+    cyan = TextHeaderFactoryHandler().get_simple_header(TextColor.cyan)
+    white = TextHeaderFactoryHandler().get_simple_header(TextColor.white)
+
     # Debug
     debug_normal = TextHeaderFactoryHandler().get_debug_header(TextStyle.normal)
     debug_bold = TextHeaderFactoryHandler().get_debug_header(TextStyle.bold)
@@ -56,103 +69,222 @@ class TextHeader:
     debug_italic = TextHeaderFactoryHandler().get_debug_header(TextStyle.italic)
     debug_blink = TextHeaderFactoryHandler().get_debug_header(TextStyle.blink)
 
-    # Good
+    # Message
     good = TextHeaderFactoryHandler().get_message_header(TextColor.green)
-
-    # Info
     info = TextHeaderFactoryHandler().get_message_header(TextColor.cyan)
-
-    # Warning
     warning = TextHeaderFactoryHandler().get_message_header(TextColor.yellow)
-
-    # Error
     error = TextHeaderFactoryHandler().get_message_header(TextColor.red)
 
 class Logger:
     def __init__(self):
+        # Global
+        self.cumulative_log = {}
+
+        # Simple
+        self.red_log = {}
+        self.green_log = {}
+        self.yellow_log = {}
+        self.blue_log = {}
+        self.purple_log = {}
+        self.cyan_log = {}
+        self.white_log = {}
+
+        # Debug
+        self.debug_normal_log = {}
+        self.debug_bold_log = {}
+        self.debug_crisp_log = {}
+        self.debug_italic_log = {}
+        self.debug_blink_log = {}
+
+        # Messages
         self.good_log = {}
         self.info_log = {}
         self.warning_log = {}
         self.error_log = {}
-        self.cumulative_log = {}
 
         self.good("Logger initialized.")
 
-    def good(self, text):
+    def _template(
+        self, text: str, show_flag: bool, write_flag: bool, header: TextHeader,
+        logtype_label: str, log_dict: dict
+    ):
         text_str = str(text)
-        if LoggerConfig.show_log and LoggerConfig.show_good_log:
-            print("{}{}{}".format(TextHeader.good, text_str, TextHeader.std))
+        if LoggerConfig.show_log and show_flag:
+            print("{}{}{}".format(header, text_str, TextHeader.std))
         data = {
-            'LogType': 'Good',
+            'LogType': logtype_label,
             'time': str(datetime.datetime.now()),
             'text': text_str
         }
-        if LoggerConfig.write_good_log:
-            self.good_log[len(self.good_log)] = data
+        if write_flag:
+            log_dict[len(log_dict)] = data
         if LoggerConfig.write_cumulative_log:
             self.cumulative_log[len(self.cumulative_log)] = data
 
-    def info(self, text):
-        text_str = str(text)
-        if LoggerConfig.show_log and LoggerConfig.show_info_log:
-            print("{}{}{}".format(TextHeader.info, text_str, TextHeader.std))
-        data = {
-            'LogType': 'Info',
-            'time': str(datetime.datetime.now()),
-            'text': text_str
-        }
-        if LoggerConfig.write_info_log:
-            self.info_log[len(self.info_log)] = data
-        if LoggerConfig.write_cumulative_log:
-            self.cumulative_log[len(self.cumulative_log)] = data
+    # Simple
+    def red(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_red_log,
+            write_flag=LoggerConfig.write_red_log,
+            header=TextHeader.red,
+            logtype_label='Red',
+            log_dict=self.red_log
+        )
 
-    def warning(self, text):
-        text_str = str(text)
-        if LoggerConfig.show_log and LoggerConfig.show_warning_log:
-            print("{}{}{}".format(TextHeader.warning, text_str, TextHeader.std))
-        data = {
-            'LogType': 'Warning',
-            'time': str(datetime.datetime.now()),
-            'text': text_str
-        }
-        if LoggerConfig.write_warning_log:
-            self.warning_log[len(self.warning_log)] = data
-        if LoggerConfig.write_cumulative_log:
-            self.cumulative_log[len(self.cumulative_log)] = data
+    def green(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_green_log,
+            write_flag=LoggerConfig.write_green_log,
+            header=TextHeader.green,
+            logtype_label='Green',
+            log_dict=self.green_log
+        )
 
-    def error(self, text):
-        text_str = str(text)
-        if LoggerConfig.show_log and LoggerConfig.show_error_log:
-            print("{}{}{}".format(TextHeader.error, text_str, TextHeader.std))
-        data = {
-            'LogType': 'Error',
-            'time': str(datetime.datetime.now()),
-            'text': text_str
-        }
-        if LoggerConfig.write_error_log:
-            self.error_log[len(self.error_log)] = data
-        if LoggerConfig.write_cumulative_log:
-            self.cumulative_log[len(self.cumulative_log)] = data
+    def yellow(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_yellow_log,
+            write_flag=LoggerConfig.write_yellow_log,
+            header=TextHeader.yellow,
+            logtype_label='Yellow',
+            log_dict=self.yellow_log
+        )
 
+    def blue(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_blue_log,
+            write_flag=LoggerConfig.write_blue_log,
+            header=TextHeader.blue,
+            logtype_label='Blue',
+            log_dict=self.blue_log
+        )
+
+    def purple(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_purple_log,
+            write_flag=LoggerConfig.write_purple_log,
+            header=TextHeader.purple,
+            logtype_label='Purple',
+            log_dict=self.purple_log
+        )
+
+    def cyan(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_cyan_log,
+            write_flag=LoggerConfig.write_cyan_log,
+            header=TextHeader.cyan,
+            logtype_label='Cyan',
+            log_dict=self.cyan_log
+        )
+
+    def white(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_white_log,
+            write_flag=LoggerConfig.write_white_log,
+            header=TextHeader.white,
+            logtype_label='White',
+            log_dict=self.white_log
+        )
+
+    # Debug
     def debug_normal(self, text):
-        text_str = str(text)
-        print("{}{}{}".format(TextHeader.debug_normal, text_str, TextHeader.std))
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_debug_normal_log,
+            write_flag=LoggerConfig.write_debug_normal_log,
+            header=TextHeader.debug_normal,
+            logtype_label='Debug Normal',
+            log_dict=self.debug_normal_log
+        )
 
     def debug_bold(self, text):
-        text_str = str(text)
-        print("{}{}{}".format(TextHeader.debug_bold, text_str, TextHeader.std))
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_debug_bold_log,
+            write_flag=LoggerConfig.write_debug_bold_log,
+            header=TextHeader.debug_bold,
+            logtype_label='Debug Bold',
+            log_dict=self.debug_bold_log
+        )
 
     def debug_crisp(self, text):
-        text_str = str(text)
-        print("{}{}{}".format(TextHeader.debug_crisp, text_str, TextHeader.std))
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_debug_crisp_log,
+            write_flag=LoggerConfig.write_debug_crisp_log,
+            header=TextHeader.debug_crisp,
+            logtype_label='Debug Crisp',
+            log_dict=self.debug_crisp_log
+        )
 
     def debug_italic(self, text):
         text_str = str(text)
         print("{}{}{}".format(TextHeader.debug_italic, text_str, TextHeader.std))
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_debug_italic_log,
+            write_flag=LoggerConfig.write_debug_italic_log,
+            header=TextHeader.debug_italic,
+            logtype_label='Debug Italic',
+            log_dict=self.debug_italic_log
+        )
 
     def debug_blink(self, text):
-        text_str = str(text)
-        print("{}{}{}".format(TextHeader.debug_blink, text_str, TextHeader.std))
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_debug_blink_log,
+            write_flag=LoggerConfig.write_debug_blink_log,
+            header=TextHeader.debug_blink,
+            logtype_label='Debug Blink',
+            log_dict=self.debug_blink_log
+        )
+
+    # Messages
+    def good(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_good_log,
+            write_flag=LoggerConfig.write_good_log,
+            header=TextHeader.good,
+            logtype_label='Good',
+            log_dict=self.good_log
+        )
+
+    def info(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_info_log,
+            write_flag=LoggerConfig.write_info_log,
+            header=TextHeader.good,
+            logtype_label='Info',
+            log_dict=self.info_log
+        )
+
+    def warning(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_warning_log,
+            write_flag=LoggerConfig.write_warning_log,
+            header=TextHeader.warning,
+            logtype_label='Warning',
+            log_dict=self.warning_log
+        )
+
+    def error(self, text):
+        self._template(
+            text=text,
+            show_flag=LoggerConfig.show_error_log,
+            write_flag=LoggerConfig.write_error_log,
+            header=TextHeader.error,
+            logtype_label='Error',
+            log_dict=self.error_log
+        )
 
     def test_logger(self):
         print('Hi')
@@ -173,6 +305,20 @@ class Logger:
         self.debug_italic('Debug Italic')
         print('Hi')
         self.debug_blink('Debug Blink')
+        print('Hi')
+        self.red('Red')
+        print('Hi')
+        self.green('Green')
+        print('Hi')
+        self.yellow('Yellow')
+        print('Hi')
+        self.blue('Blue')
+        print('Hi')
+        self.purple('Purple')
+        print('Hi')
+        self.cyan('Cyan')
+        print('Hi')
+        self.white('White')
         print('Hi')
 
 
