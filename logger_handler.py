@@ -261,7 +261,7 @@ class Logger:
             text=text,
             show_flag=LoggerConfig.show_info_log,
             write_flag=LoggerConfig.write_info_log,
-            header=TextHeader.good,
+            header=TextHeader.info,
             logtype_label='Info',
             log_dict=self.info_log
         )
