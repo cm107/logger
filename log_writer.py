@@ -36,7 +36,7 @@ class LogWriter:
 
     def append_line(self, logname: str, logdir: str, data: dict):
         filepath = f"{logdir}/{logname}.log"
-        f = open(filepath, "w+")
+        f = open(filepath, "a+")
         log_type = data["LogType"]
         log_time = data["time"]
         log_text = data["text"]
