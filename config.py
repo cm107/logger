@@ -14,6 +14,7 @@ class LoggerConfig:
     show_log = True
     write_log = True
     write_cumulative_log = True
+    append_mode = True
     cumulative_log_path = f"{logs_dir}/cumulative.log"
 
     # Simple
