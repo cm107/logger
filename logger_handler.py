@@ -107,6 +107,7 @@ class Logger:
 
         # Log Writer
         self.log_writer = LogWriter(self)
+        self.log_writer.init_log_dir()
 
         self.system("Logger initialized.")
 
