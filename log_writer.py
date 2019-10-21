@@ -5,8 +5,6 @@ class LogWriter:
     def __init__(self, logger):
         self.logger = logger
         self.log_dir = LoggerConfig.logs_dir
-        # self.logger.system(f'Using {self.log_dir} for log directory.')
-        # self.logger.system("Log Writer initialized")
 
     def dir_exists(self, url: str):
         return os.path.isdir(url)

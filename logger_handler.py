@@ -1,6 +1,8 @@
 import datetime
 from .config import LoggerConfig
 from .log_writer import LogWriter
+from .util.utils import create_softlink, delete_file, link_exists, \
+    rel_to_abs_path
 
 class TextStyle:
     normal = '0'
@@ -106,10 +108,19 @@ class Logger:
         self.system_log = {}
 
         # Log Writer
+        self.log_link_path = None
         self.log_writer = LogWriter(self)
         self.log_writer.init_log_dir()
 
         self.system("Logger initialized.")
+
+    def link_log_dir(self, log_dir: str):
+        if self.log_link_path is not None:
+            if link_exists(self.log_link_path):
+                delete_file(self.log_link_path)
+        self.log_link_path = log_dir
+        create_softlink(src_path=LoggerConfig.logs_dir, dst_path=log_dir)
+        self.system(f"Linked {LoggerConfig.logs_dir} to {rel_to_abs_path(log_dir)}")
 
     def _template(
         self, text: str, show_flag: bool, write_flag: bool, header: TextHeader,
