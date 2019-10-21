@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='logger',
+    name='mylogger',
     version='0.1',
     description='logger library',
     long_description=long_description,
