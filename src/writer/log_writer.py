@@ -1,4 +1,4 @@
-from .config import LoggerConfig
+from ..conf.config import LoggerConfig
 import os, traceback
 
 class LogWriter:

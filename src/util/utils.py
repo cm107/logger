@@ -1,4 +1,9 @@
-import os, subprocess
+import os, subprocess, inspect
+
+def get_script_dir() -> str:
+    caller_script_path = os.path.abspath((inspect.stack()[1])[1])
+    caller_script_dir = os.path.dirname(caller_script_path)
+    return caller_script_dir
 
 def link_exists(url: str):
     return os.path.islink(url)

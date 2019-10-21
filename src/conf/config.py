@@ -1,8 +1,9 @@
-import os
+from ..util.utils import get_script_dir, rel_to_abs_path
 
 class LoggerConfig:
     # Directories
-    logs_dir = f'{os.path.dirname(os.path.realpath(__file__))}/logs'
+    src_dir = rel_to_abs_path(get_script_dir())
+    logs_dir = rel_to_abs_path(f'{src_dir}/../logs')
     messages_logs_dir = f"{logs_dir}/messages"
     debug_logs_dir = f"{logs_dir}/debug"
     simple_logs_dir = f"{logs_dir}/simple"

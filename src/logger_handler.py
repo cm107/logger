@@ -1,6 +1,6 @@
 import datetime
-from .config import LoggerConfig
-from .log_writer import LogWriter
+from .conf.config import LoggerConfig
+from .writer.log_writer import LogWriter
 from .util.utils import create_softlink, delete_file, link_exists, \
     rel_to_abs_path
 
