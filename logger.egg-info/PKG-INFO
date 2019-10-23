@@ -9,6 +9,10 @@ License: MIT License
 Description: # logger
         logger library
         
+        ## Installation
+        ```console
+        pip install git+https://github.com/cm107/logger#egg=logger
+        ```
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
