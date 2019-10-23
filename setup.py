@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 packages = find_packages(
         where='.',
-        include=['src*', 'logs*']
+        include=['logger*']
 )
 
 with open("README.md", "r") as fh:
