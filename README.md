@@ -3,5 +3,5 @@ logger library
 
 ## Installation
 ```console
-pip install git+https://github.com/cm107/logger#egg=logger
+pip install https://github.com/cm107/logger/archive/v0.1.zip
 ```
