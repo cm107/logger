@@ -2,6 +2,12 @@
 logger library
 
 ## Installation
+### Install From Github
 ```console
-pip install git+https://github.com/cm107/logger#egg=logger
+pip install https://github.com/cm107/logger/archive/0.1.zip
+```
+
+### Install From Pypi
+```console
+pip install pyclay_logger==0.1
 ```

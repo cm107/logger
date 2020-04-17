@@ -26,7 +26,8 @@ setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'pylint>=2.4.2'
+        'pylint>=2.4.2',
+        'twine>=3.1.1'
     ],
     python_requires='>=3.6'
 )
