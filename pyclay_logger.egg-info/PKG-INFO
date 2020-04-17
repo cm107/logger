@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pyclay-logger
-Version: 0.1
+Version: 0.2
 Summary: logger library
 Home-page: https://github.com/cm107/logger
 Author: Clayton Mork
@@ -19,6 +19,7 @@ Description: # logger
         ```console
         pip install pyclay-logger
         ```
+        
 Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
