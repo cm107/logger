@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import logger as pkg
 
 packages = find_packages(
         where='.',
@@ -9,8 +10,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='logger',
-    version='0.1',
+    name='pyclay_logger',
+    version=pkg.__version__,
     description='logger library',
     long_description=long_description,
     long_description_content_type="text/markdown",
