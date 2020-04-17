@@ -4,10 +4,10 @@ logger library
 ## Installation
 ### Install From Github
 ```console
-pip install https://github.com/cm107/logger/archive/0.1.zip
+pip install https://github.com/cm107/logger/archive/master.zip
 ```
 
 ### Install From Pypi
 ```console
-pip install pyclay_logger==0.1
+pip install pyclay-logger
 ```
